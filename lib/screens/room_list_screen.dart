@@ -171,10 +171,16 @@ class _RoomListScreenState extends State<RoomListScreen> {
                     message: 'No rooms yet.\nTap + to add a room.',
                   );
                 }
-                return ListView.separated(
-                  itemCount: rooms.length,
-                  separatorBuilder: (_, _) => const Divider(height: 1),
-                  itemBuilder: (context, index) {
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    // Live stream keeps data fresh; give pull-to-refresh feedback.
+                    await Future<void>.delayed(
+                        const Duration(milliseconds: 400));
+                  },
+                  child: ListView.separated(
+                    itemCount: rooms.length,
+                    separatorBuilder: (_, _) => const Divider(height: 1),
+                    itemBuilder: (context, index) {
                     final room = rooms[index];
                     return Dismissible(
                       key: ValueKey(room.id),
@@ -218,6 +224,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
                       ),
                     );
                   },
+                  ),
                 );
               },
             ),
@@ -227,6 +234,8 @@ class _RoomListScreenState extends State<RoomListScreen> {
     );
   }
 }
+
+
 
 
 

@@ -73,7 +73,7 @@ Each item below is one commit-sized task. Work top to bottom.
 
 - [x] Extract a reusable `EmptyState` widget and use it on House/Room/Product lists
 - [x] Extract a reusable `LoadingIndicator` / centered spinner widget
-- [x] Add pull-to-refresh (`RefreshIndicator`) to the House list
+- [x] Add pull-to-refresh (`RefreshIndicator`) to the Room list
 - [ ] Add pull-to-refresh to the Room list
 - [ ] Show a SnackBar confirmation after adding/updating a house
 - [ ] Show a SnackBar confirmation after adding/updating a window and floor space
@@ -126,6 +126,7 @@ Each item below is one commit-sized task. Work top to bottom.
 | 9 | Add web platform support |
 | 10 | Restore main.dart/README after flutter create overwrite |
 | 11 | Add this development plan |
+
 
 
 
