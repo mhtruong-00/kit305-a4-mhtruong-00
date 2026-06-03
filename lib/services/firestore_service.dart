@@ -91,7 +91,7 @@ class FirestoreService {
   }
 
   /// Duplicate a room (and all of its windows + floor spaces) into a new
-  /// "<name> (Copy)" room. Saves users retyping every measurement when a
+  /// `<name> (Copy)` room. Saves users retyping every measurement when a
   /// layout repeats (e.g. identical bedrooms).
   Future<void> duplicateRoom(Room room) async {
     final copy = Room(
@@ -222,4 +222,5 @@ class QuoteData {
     required this.floorsByRoom,
   });
 }
+
 
