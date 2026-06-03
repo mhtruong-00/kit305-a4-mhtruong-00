@@ -15,6 +15,7 @@ import '../services/firestore_service.dart';
 import '../services/product_api.dart';
 import '../services/quote_calculator.dart';
 import '../theme/app_theme.dart';
+import '../widgets/loading_indicator.dart';
 
 class QuoteScreen extends StatefulWidget {
   final House house;
@@ -125,7 +126,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
         ],
       ),
       body: _loading
-          ? const Center(child: CircularProgressIndicator())
+          ? const LoadingIndicator(message: 'Loading quote…')
           : Column(
               children: [
                 Expanded(
@@ -326,5 +327,7 @@ class _QuoteScreenState extends State<QuoteScreen> {
     );
   }
 }
+
+
 
 

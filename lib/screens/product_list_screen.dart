@@ -8,6 +8,7 @@ import '../models/product.dart';
 import '../services/compatibility_checker.dart';
 import '../services/product_api.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/loading_indicator.dart';
 import 'product_variant_screen.dart';
 
 /// Result returned to the edit screens when a product is chosen.
@@ -137,7 +138,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
           ),
           Expanded(
             child: _loading
-                ? const Center(child: CircularProgressIndicator())
+                ? const LoadingIndicator(message: 'Loading products…')
                 : _displayed.isEmpty
                     ? RefreshIndicator(
                         onRefresh: _load,
@@ -196,6 +197,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
     );
   }
 }
+
+
 
 
 

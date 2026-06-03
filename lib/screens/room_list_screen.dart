@@ -8,6 +8,7 @@ import '../models/room.dart';
 import '../services/firestore_service.dart';
 import '../services/image_store.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/loading_indicator.dart';
 import 'quote_screen.dart';
 import 'room_detail_screen.dart';
 
@@ -161,7 +162,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
               stream: FirestoreService.shared.roomsStream(widget.house.id),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const LoadingIndicator(message: 'Loading rooms…');
                 }
                 final rooms = _filter(snapshot.data ?? []);
                 if (rooms.isEmpty) {
@@ -226,6 +227,8 @@ class _RoomListScreenState extends State<RoomListScreen> {
     );
   }
 }
+
+
 
 
 

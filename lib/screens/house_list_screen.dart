@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../models/house.dart';
 import '../services/firestore_service.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/loading_indicator.dart';
 import 'house_edit_screen.dart';
 import 'quote_screen.dart';
 import 'room_list_screen.dart';
@@ -130,7 +131,7 @@ class _HouseListScreenState extends State<HouseListScreen> {
               ),
               Expanded(
                 child: snapshot.connectionState == ConnectionState.waiting
-                    ? const Center(child: CircularProgressIndicator())
+                    ? const LoadingIndicator(message: 'Loading houses…')
                     : displayed.isEmpty
                         ? const EmptyState(
                             icon: Icons.home_outlined,
@@ -190,6 +191,8 @@ class _HouseListScreenState extends State<HouseListScreen> {
     );
   }
 }
+
+
 
 
 
