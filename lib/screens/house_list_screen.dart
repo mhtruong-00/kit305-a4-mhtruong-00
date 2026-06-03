@@ -138,50 +138,58 @@ class _HouseListScreenState extends State<HouseListScreen> {
                             message:
                                 'No houses yet.\nTap + to add your first house.',
                           )
-                        : ListView.separated(
-                            itemCount: displayed.length,
-                            separatorBuilder: (_, _) =>
-                                const Divider(height: 1),
-                            itemBuilder: (context, index) {
-                              final house = displayed[index];
-                              return Dismissible(
-                                key: ValueKey(house.id),
-                                direction: DismissDirection.endToStart,
-                                background: Container(
-                                  color: Colors.red,
-                                  alignment: Alignment.centerRight,
-                                  padding: const EdgeInsets.only(right: 20),
-                                  child: const Icon(Icons.delete,
-                                      color: Colors.white),
-                                ),
-                                confirmDismiss: (_) async {
-                                  await _confirmDelete(house);
-                                  return false; // stream refreshes the list
-                                },
-                                child: ListTile(
-                                  title: Text(house.name),
-                                  subtitle: Text(
-                                    [
-                                      house.address,
-                                      if (house.notes.trim().isNotEmpty)
-                                        '📝 ${house.notes.trim()}',
-                                    ].join('\n'),
+                        : RefreshIndicator(
+                            onRefresh: () async {
+                              // The snapshot listener already keeps data fresh;
+                              // give the user the pull-to-refresh feedback.
+                              await Future<void>.delayed(
+                                  const Duration(milliseconds: 400));
+                            },
+                            child: ListView.separated(
+                              itemCount: displayed.length,
+                              separatorBuilder: (_, _) =>
+                                  const Divider(height: 1),
+                              itemBuilder: (context, index) {
+                                final house = displayed[index];
+                                return Dismissible(
+                                  key: ValueKey(house.id),
+                                  direction: DismissDirection.endToStart,
+                                  background: Container(
+                                    color: Colors.red,
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: const Icon(Icons.delete,
+                                        color: Colors.white),
                                   ),
-                                  isThreeLine: house.notes.trim().isNotEmpty,
-                                  trailing: IconButton(
-                                    icon: const Icon(Icons.edit_outlined),
-                                    onPressed: () => _openEdit(house),
-                                  ),
-                                  onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          RoomListScreen(house: house),
+                                  confirmDismiss: (_) async {
+                                    await _confirmDelete(house);
+                                    return false; // stream refreshes the list
+                                  },
+                                  child: ListTile(
+                                    title: Text(house.name),
+                                    subtitle: Text(
+                                      [
+                                        house.address,
+                                        if (house.notes.trim().isNotEmpty)
+                                          '📝 ${house.notes.trim()}',
+                                      ].join('\n'),
+                                    ),
+                                    isThreeLine: house.notes.trim().isNotEmpty,
+                                    trailing: IconButton(
+                                      icon: const Icon(Icons.edit_outlined),
+                                      onPressed: () => _openEdit(house),
+                                    ),
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            RoomListScreen(house: house),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
               ),
             ],
@@ -191,6 +199,8 @@ class _HouseListScreenState extends State<HouseListScreen> {
     );
   }
 }
+
+
 
 
 
