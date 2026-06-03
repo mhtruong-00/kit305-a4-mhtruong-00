@@ -172,6 +172,7 @@ class _FloorSpaceEditScreenState extends State<FloorSpaceEditScreen> {
 
     setState(() => _saving = true);
     try {
+      final messenger = ScaffoldMessenger.of(context);
       if (_isEditing) {
         final f = widget.floor!
           ..name = name
@@ -194,7 +195,16 @@ class _FloorSpaceEditScreenState extends State<FloorSpaceEditScreen> {
           photoBase64: photoBase64,
         ));
       }
-      if (mounted) Navigator.pop(context);
+      if (mounted) {
+        Navigator.pop(context);
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(_isEditing
+                ? 'Saved floor space "$name".'
+                : 'Added floor space "$name".'),
+          ),
+        );
+      }
     } catch (e) {
       if (mounted) {
         setState(() => _saving = false);
@@ -315,5 +325,7 @@ class _FloorSpaceEditScreenState extends State<FloorSpaceEditScreen> {
     );
   }
 }
+
+
 
 

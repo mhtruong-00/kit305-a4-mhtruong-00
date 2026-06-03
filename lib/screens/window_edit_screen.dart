@@ -175,6 +175,7 @@ class _WindowEditScreenState extends State<WindowEditScreen> {
 
     setState(() => _saving = true);
     try {
+      final messenger = ScaffoldMessenger.of(context);
       if (_isEditing) {
         final w = widget.window!
           ..name = name
@@ -199,7 +200,16 @@ class _WindowEditScreenState extends State<WindowEditScreen> {
           photoBase64: photoBase64,
         ));
       }
-      if (mounted) Navigator.pop(context);
+      if (mounted) {
+        Navigator.pop(context);
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(_isEditing
+                ? 'Saved window "$name".'
+                : 'Added window "$name".'),
+          ),
+        );
+      }
     } catch (e) {
       if (mounted) {
         setState(() => _saving = false);
@@ -319,5 +329,7 @@ class _WindowEditScreenState extends State<WindowEditScreen> {
     );
   }
 }
+
+
 
 
