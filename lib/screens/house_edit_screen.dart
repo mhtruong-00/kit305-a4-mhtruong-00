@@ -77,6 +77,7 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
 
     setState(() => _saving = true);
     try {
+      final messenger = ScaffoldMessenger.of(context);
       if (_isEditing) {
         final updated = widget.house!
           ..name = name
@@ -88,7 +89,16 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
           House(name: name, address: address, notes: _notesController.text),
         );
       }
-      if (mounted) Navigator.pop(context);
+      if (mounted) {
+        Navigator.pop(context);
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(_isEditing
+                ? 'Saved changes to "$name".'
+                : 'Added "$name".'),
+          ),
+        );
+      }
     } catch (e) {
       if (mounted) {
         setState(() => _saving = false);
@@ -158,4 +168,5 @@ class _HouseEditScreenState extends State<HouseEditScreen> {
     );
   }
 }
+
 

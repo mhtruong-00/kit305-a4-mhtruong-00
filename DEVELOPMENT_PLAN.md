@@ -75,7 +75,7 @@ Each item below is one commit-sized task. Work top to bottom.
 - [x] Extract a reusable `LoadingIndicator` / centered spinner widget
 - [x] Add pull-to-refresh (`RefreshIndicator`) to the Room list
 - [ ] Add pull-to-refresh to the Room list
-- [ ] Show a SnackBar confirmation after adding/updating a house
+- [x] Show a SnackBar confirmation after adding/updating a house
 - [ ] Show a SnackBar confirmation after adding/updating a window and floor space
 - [ ] Centralise error handling into a small `showErrorSnack(context, e)` helper and adopt it across screens
 - [ ] Add a confirmation SnackBar + undo affordance after deleting a room
@@ -126,6 +126,7 @@ Each item below is one commit-sized task. Work top to bottom.
 | 9 | Add web platform support |
 | 10 | Restore main.dart/README after flutter create overwrite |
 | 11 | Add this development plan |
+
 
 
 
