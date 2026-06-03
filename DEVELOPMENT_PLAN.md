@@ -74,11 +74,10 @@ Each item below is one commit-sized task. Work top to bottom.
 - [x] Extract a reusable `EmptyState` widget and use it on House/Room/Product lists
 - [x] Extract a reusable `LoadingIndicator` / centered spinner widget
 - [x] Add pull-to-refresh (`RefreshIndicator`) to the Room list
-- [ ] Add pull-to-refresh to the Room list
 - [x] Show a SnackBar confirmation after adding/updating a house
 - [x] Show a SnackBar confirmation after adding/updating a window and floor space
 - [x] Centralise error handling into a small `showErrorSnack(context, e)` helper and adopt it across screens
-- [ ] Add a confirmation SnackBar + undo affordance after deleting a room
+- [x] Add a confirmation SnackBar + undo affordance after deleting a room
 - [ ] Add an item count summary header to RoomDetail (e.g. "2 windows • 1 floor")
 - [ ] Add a per-house total preview badge on the House list rows
 - [ ] Improve the Quote empty state (call-to-action to add rooms)

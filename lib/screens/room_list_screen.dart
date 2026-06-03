@@ -101,7 +101,34 @@ class _RoomListScreenState extends State<RoomListScreen> {
       ),
     );
     if (ok == true) {
-      await FirestoreService.shared.deleteRoom(room.id);
+      try {
+        final backup =
+            await FirestoreService.shared.deleteRoomWithBackup(room);
+        if (!mounted) return;
+        final messenger = ScaffoldMessenger.of(context);
+        messenger.hideCurrentSnackBar();
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text('Deleted "${room.name}"'),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () async {
+                try {
+                  await FirestoreService.shared.restoreRoom(backup);
+                } catch (e) {
+                  if (mounted) {
+                    showErrorSnack(context, e, prefix: "Couldn't restore");
+                  }
+                }
+              },
+            ),
+          ),
+        );
+      } catch (e) {
+        if (mounted) {
+          showErrorSnack(context, e, prefix: "Couldn't delete");
+        }
+      }
     }
   }
 

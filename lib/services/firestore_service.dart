@@ -90,6 +90,50 @@ class FirestoreService {
     await _db.collection('rooms').doc(roomId).delete();
   }
 
+  /// Deletes a room (with its windows + floor spaces) but first captures a
+  /// [RoomBackup] of every document so the delete can be undone. Used by the
+  /// Room list to offer an "Undo" SnackBar action.
+  Future<RoomBackup> deleteRoomWithBackup(Room room) async {
+    final windowsSnap = await _db
+        .collection('windows')
+        .where('roomId', isEqualTo: room.id)
+        .get();
+    final floorsSnap = await _db
+        .collection('floorspaces')
+        .where('roomId', isEqualTo: room.id)
+        .get();
+
+    final backup = RoomBackup(
+      roomId: room.id,
+      roomData: room.toData(),
+      windows: {
+        for (final d in windowsSnap.docs)
+          d.id: Map<String, dynamic>.from(d.data())
+      },
+      floorSpaces: {
+        for (final d in floorsSnap.docs)
+          d.id: Map<String, dynamic>.from(d.data())
+      },
+    );
+
+    await deleteRoom(room.id);
+    return backup;
+  }
+
+  /// Re-creates the documents captured in [backup], restoring the room and all
+  /// of its windows + floor spaces with their original IDs.
+  Future<void> restoreRoom(RoomBackup backup) async {
+    final batch = _db.batch();
+    batch.set(_db.collection('rooms').doc(backup.roomId), backup.roomData);
+    backup.windows.forEach((id, data) {
+      batch.set(_db.collection('windows').doc(id), data);
+    });
+    backup.floorSpaces.forEach((id, data) {
+      batch.set(_db.collection('floorspaces').doc(id), data);
+    });
+    await batch.commit();
+  }
+
   /// Duplicate a room (and all of its windows + floor spaces) into a new
   /// `<name> (Copy)` room. Saves users retyping every measurement when a
   /// layout repeats (e.g. identical bedrooms).
@@ -220,6 +264,23 @@ class QuoteData {
     required this.rooms,
     required this.windowsByRoom,
     required this.floorsByRoom,
+  });
+}
+
+/// Snapshot of a deleted room (and its nested items) captured by
+/// [FirestoreService.deleteRoomWithBackup] so the delete can be undone via
+/// [FirestoreService.restoreRoom].
+class RoomBackup {
+  final String roomId;
+  final Map<String, dynamic> roomData;
+  final Map<String, Map<String, dynamic>> windows;
+  final Map<String, Map<String, dynamic>> floorSpaces;
+
+  RoomBackup({
+    required this.roomId,
+    required this.roomData,
+    required this.windows,
+    required this.floorSpaces,
   });
 }
 
