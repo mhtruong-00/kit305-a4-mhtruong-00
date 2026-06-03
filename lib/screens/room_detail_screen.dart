@@ -11,6 +11,7 @@ import '../services/firestore_service.dart';
 import '../services/image_store.dart';
 import '../services/photo_picker.dart';
 import '../theme/app_theme.dart';
+import '../widgets/error_snack.dart';
 import 'floor_space_edit_screen.dart';
 import 'window_edit_screen.dart';
 
@@ -43,8 +44,7 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
       setState(() => _room.photoBase64 = base64);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Save failed: $e')));
+        showErrorSnack(context, e, prefix: 'Save failed');
       }
     }
   }
@@ -302,4 +302,6 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
     );
   }
 }
+
+
 

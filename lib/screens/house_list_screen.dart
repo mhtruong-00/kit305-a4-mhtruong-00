@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../models/house.dart';
 import '../services/firestore_service.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/error_snack.dart';
 import '../widgets/loading_indicator.dart';
 import 'house_edit_screen.dart';
 import 'quote_screen.dart';
@@ -51,8 +52,7 @@ class _HouseListScreenState extends State<HouseListScreen> {
         await FirestoreService.shared.deleteHouse(house.id);
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Delete failed: $e')));
+          showErrorSnack(context, e, prefix: 'Delete failed');
         }
       }
     }
@@ -199,6 +199,8 @@ class _HouseListScreenState extends State<HouseListScreen> {
     );
   }
 }
+
+
 
 
 

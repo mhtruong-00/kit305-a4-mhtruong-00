@@ -8,6 +8,7 @@ import '../models/room.dart';
 import '../services/firestore_service.dart';
 import '../services/image_store.dart';
 import '../widgets/empty_state.dart';
+import '../widgets/error_snack.dart';
 import '../widgets/loading_indicator.dart';
 import 'quote_screen.dart';
 import 'room_detail_screen.dart';
@@ -78,8 +79,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Couldn't duplicate: $e")));
+        showErrorSnack(context, e, prefix: "Couldn't duplicate");
       }
     }
   }
@@ -234,6 +234,8 @@ class _RoomListScreenState extends State<RoomListScreen> {
     );
   }
 }
+
+
 
 
 
