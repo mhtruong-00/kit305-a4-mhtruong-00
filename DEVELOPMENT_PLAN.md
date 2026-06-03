@@ -71,7 +71,7 @@ Firestore schema (shared with A2/A3): top-level `houses`, `rooms`, `windows`,
 
 Each item below is one commit-sized task. Work top to bottom.
 
-- [ ] Extract a reusable `EmptyState` widget and use it on House/Room/Product lists
+- [x] Extract a reusable `EmptyState` widget and use it on House/Room/Product lists
 - [ ] Extract a reusable `LoadingIndicator` / centered spinner widget
 - [ ] Add pull-to-refresh (`RefreshIndicator`) to the House list
 - [ ] Add pull-to-refresh to the Room list
@@ -126,5 +126,6 @@ Each item below is one commit-sized task. Work top to bottom.
 | 9 | Add web platform support |
 | 10 | Restore main.dart/README after flutter create overwrite |
 | 11 | Add this development plan |
+
 
 

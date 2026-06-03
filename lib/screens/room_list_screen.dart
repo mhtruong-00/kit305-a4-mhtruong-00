@@ -7,6 +7,7 @@ import '../models/house.dart';
 import '../models/room.dart';
 import '../services/firestore_service.dart';
 import '../services/image_store.dart';
+import '../widgets/empty_state.dart';
 import 'quote_screen.dart';
 import 'room_detail_screen.dart';
 
@@ -164,9 +165,9 @@ class _RoomListScreenState extends State<RoomListScreen> {
                 }
                 final rooms = _filter(snapshot.data ?? []);
                 if (rooms.isEmpty) {
-                  return const Center(
-                    child: Text('No rooms yet.\nTap + to add a room.',
-                        textAlign: TextAlign.center),
+                  return const EmptyState(
+                    icon: Icons.meeting_room_outlined,
+                    message: 'No rooms yet.\nTap + to add a room.',
                   );
                 }
                 return ListView.separated(
@@ -225,5 +226,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
     );
   }
 }
+
+
 
 
